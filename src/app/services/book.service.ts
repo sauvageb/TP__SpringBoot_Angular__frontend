@@ -38,4 +38,8 @@ export class BookService {
     return this.http.put(`${baseUrl}/${id}`, data);
   }
 
+  findByTitle(title: any): Observable<Book[]> {
+    return this.http.get<Book[]>(`${baseUrl}?title=${title}`);
+  }
+
 }
