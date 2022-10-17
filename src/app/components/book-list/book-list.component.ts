@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../models/book";
+import {NavbarSearchService} from "../../services/navbar-search.service";
+import {mergeMap} from "rxjs";
 
 @Component({
   selector: 'app-book-list',
@@ -12,12 +14,22 @@ export class BookListComponent implements OnInit {
   books?: Book[];
   currentBook: Book = {};
   currentIndex = -1;
+  searchValue = '';
 
-  constructor(private bookService: BookService) {
+  constructor(private bookService: BookService, private searchBar: NavbarSearchService) {
   }
 
   ngOnInit(): void {
     this.retrieveBooks();
+    this.searchBar.currentSearch
+      .pipe(
+        mergeMap(titleSearched => {
+          this.currentBook = {};
+          this.currentIndex = -1;
+          return this.bookService.findByTitle(titleSearched);
+        }),
+      )
+      .subscribe(bookSearched => this.books = bookSearched)
   }
 
   private retrieveBooks() {
@@ -53,21 +65,6 @@ export class BookListComponent implements OnInit {
           console.log(err);
         }
       });
-  }
-
-  searchTitle(): void {
-    this.currentBook = {};
-    this.currentIndex = -1;
-
-    // this.bookService.findByTitle(this.title)
-    //   .subscribe(
-    //     data => {
-    //       this.books = data;
-    //       console.log(data);
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     });
   }
 
   removeBook(id: number) {
