@@ -1,11 +1,17 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AddBookComponent } from './components/add-book/add-book.component';
-import { BookDetailsComponent } from './components/book-details/book-details.component';
-import { BookListComponent } from './components/book-list/book-list.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AddBookComponent} from './components/add-book/add-book.component';
+import {BookDetailsComponent} from './components/book-details/book-details.component';
+import {BookListComponent} from './components/book-list/book-list.component';
+import {HttpClientModule} from "@angular/common/http";
+
+import {registerLocaleData} from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+
+registerLocaleData(localeEn, 'en');
 
 @NgModule({
   declarations: [
@@ -16,9 +22,13 @@ import { BookListComponent } from './components/book-list/book-list.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'en-EN'}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
