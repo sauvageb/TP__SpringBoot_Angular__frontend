@@ -44,15 +44,15 @@ export class BookListComponent implements OnInit {
   }
 
   removeAllBooks(): void {
-    // this.bookService.deleteAll()
-    //   .subscribe(
-    //     response => {
-    //       console.log(response);
-    //       this.refreshList();
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     });
+    this.bookService.deleteAll()
+      .subscribe({
+        next: response => {
+          this.refreshList();
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
   }
 
   searchTitle(): void {
@@ -68,5 +68,17 @@ export class BookListComponent implements OnInit {
     //     error => {
     //       console.log(error);
     //     });
+  }
+
+  removeBook(id: number) {
+    this.bookService.delete(id)
+      .subscribe({
+        next: response => {
+          this.refreshList();
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
   }
 }

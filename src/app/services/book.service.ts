@@ -22,4 +22,11 @@ export class BookService {
     return this.http.post(baseUrl, data);
   }
 
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  deleteAll() {
+    return this.http.delete(`${baseUrl}`);
+  }
 }
