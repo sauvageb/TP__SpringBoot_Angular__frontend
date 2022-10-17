@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BookService} from "../../services/book.service";
+import {Book} from "../../models/book";
 
 @Component({
   selector: 'app-book-list',
@@ -7,9 +9,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookListComponent implements OnInit {
 
-  constructor() { }
+  books?: Book[];
+  currentBook: Book = {};
+  currentIndex = -1;
 
-  ngOnInit(): void {
+  constructor(private bookService: BookService) {
   }
 
+  ngOnInit(): void {
+    this.retrieveBooks();
+  }
+
+  private retrieveBooks() {
+    this.bookService.getAll()
+      .subscribe({
+        next: (data) => {
+          this.books = data;
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+  }
+
+  refreshList(): void {
+    this.retrieveBooks();
+    this.currentBook = {};
+    this.currentIndex = -1;
+  }
+
+  setActiveBook(book: Book, index: number): void {
+    this.currentBook = book;
+    this.currentIndex = index;
+  }
+
+  removeAllBooks(): void {
+    // this.bookService.deleteAll()
+    //   .subscribe(
+    //     response => {
+    //       console.log(response);
+    //       this.refreshList();
+    //     },
+    //     error => {
+    //       console.log(error);
+    //     });
+  }
+
+  searchTitle(): void {
+    this.currentBook = {};
+    this.currentIndex = -1;
+
+    // this.bookService.findByTitle(this.title)
+    //   .subscribe(
+    //     data => {
+    //       this.books = data;
+    //       console.log(data);
+    //     },
+    //     error => {
+    //       console.log(error);
+    //     });
+  }
 }
