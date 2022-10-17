@@ -29,4 +29,13 @@ export class BookService {
   deleteAll() {
     return this.http.delete(`${baseUrl}`);
   }
+
+  get(id: any): Observable<Book> {
+    return this.http.get(`${baseUrl}/${id}`);
+  }
+
+  update(id: any, data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, data);
+  }
+
 }
