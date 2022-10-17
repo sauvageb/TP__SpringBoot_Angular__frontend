@@ -18,4 +18,8 @@ export class BookService {
   }
 
 
+  create(data: any): Observable<Book> {
+    return this.http.post(baseUrl, data);
+  }
+
 }
