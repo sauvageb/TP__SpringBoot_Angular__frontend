@@ -8,8 +8,9 @@ import {BookDetailsComponent} from './components/book-details/book-details.compo
 import {BookListComponent} from './components/book-list/book-list.component';
 import {HttpClientModule} from "@angular/common/http";
 
-import {registerLocaleData} from '@angular/common';
+import {DatePipe, registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
+import {FormsModule} from "@angular/forms";
 
 registerLocaleData(localeEn, 'en');
 
@@ -23,10 +24,11 @@ registerLocaleData(localeEn, 'en');
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'en-EN'}
+    {provide: LOCALE_ID, useValue: 'en-EN'}, DatePipe
   ],
   bootstrap: [AppComponent]
 })

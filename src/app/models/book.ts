@@ -7,5 +7,5 @@ export interface Book {
   nbPages?: number;
   weight?: number;
   published?: boolean;
-  publishingDate?: Date;
+  publishingDate?: string;
 }
