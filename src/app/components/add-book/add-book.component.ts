@@ -29,10 +29,7 @@ export class AddBookComponent implements OnInit {
   }
 
   saveTutorial(): void {
-    const data = {
-      title: this.book.title,
-      description: this.book.description
-    };
+    const data = {...this.book};
 
     this.bookService.create(data)
       .subscribe({
