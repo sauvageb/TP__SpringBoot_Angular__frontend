@@ -1,1 +1,161 @@
-<p>book-details works!</p>
+<div class="container">
+  <div class="row" *ngIf="currentBook.id">
+
+    <!-- COL LEFT   -->
+    <div class="col-md-4">
+
+      <!-- Creating Form -->
+      <div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Title</span>
+          <input type="text" class="form-control" placeholder="Tintin développe.."
+                 required
+                 [(ngModel)]="currentBook.title"
+                 name="title"
+                 aria-describedby="currentBook Title">
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="64"
+                 aria-label="Number of pages"
+                 required
+                 [(ngModel)]="currentBook.nbPages"
+                 name="nbPages"
+                 aria-describedby="Number of pages">
+          <span class="input-group-text" id="basic-addon2">Pages</span>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text">Picture</span>
+          <input type="text" class="form-control" aria-describedby="picture Url"
+                 [(ngModel)]="currentBook.pictureUrl" required
+                 name="pictureUrl"
+                 placeholder="https://www.website.com/currentBook-cover.jpg">
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" aria-label="Weight (to the nearest gramme)" placeholder="138"
+                 [(ngModel)]="currentBook.weight" required
+                 name="weight">
+          <span class="input-group-text" class="form-control">Grammes</span>
+        </div>
+
+        <div class="input-group mb-3">
+          <textarea class="form-control" aria-label="Description" placeholder="Description .."
+                    [(ngModel)]="currentBook.description" required
+                    name="description"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text">Publishing Date</span>
+          <input type="date" class="form-control" aria-label="Publishing Date" required
+                 [(ngModel)]="currentBook.publishingDate" name="publishingDate">
+        </div>
+
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="published"
+                 [(ngModel)]="currentBook.published" name="published">
+          <label class="form-check-label" for="published">Published</label>
+        </div>
+
+
+        <div class="input-group mt-3 d-flex justify-content-end">
+          <button (click)="updateBook()" class="btn btn-dark">
+            Update
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-send-check-fill" viewBox="0 0 16 16">
+              <path
+                d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+              <path
+                d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+
+      <div *ngIf="successStatus" class="alert alert-success mt-2 text-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+        This book was updated successfully!
+      </div>
+
+      <div *ngIf="errorStatus" class="alert alert-danger mt-2 text-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+          <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </svg>
+        An error has occurred.
+      </div>
+
+    </div>
+
+
+    <!--  COL RIGHT  -->
+    <div class="col-md-8">
+      <h5>Book Preview :</h5>
+      <div class="card">
+
+        <img *ngIf="currentBook.pictureUrl" class="card-img-top" [src]="currentBook.pictureUrl"
+             [alt]="currentBook.title">
+
+        <svg *ngIf="!currentBook.pictureUrl" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+             class="bi bi-image-alt m-3" height="600"
+             viewBox="0 0 16 16">
+          <path
+            d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zm4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5l-4.777-3.947z"/>
+        </svg>
+
+        <div class="card-body">
+          <div class="card-title d-flex flex-row d-flex justify-content-between">
+            <h2>{{ currentBook.title}}</h2>
+            <p [ngClass]="{'text-bg-primary': currentBook.published, 'text-bg-danger': !currentBook.published}"
+               class="badge rounded-pill py-2 px-5">{{currentBook.published ? 'Published' : 'Not Published'}}</p>
+          </div>
+          <p class="card-text">{{ currentBook.description }}</p>
+          <p class="card-text"><span class="fw-bold">ISBN :</span> {{ currentBook.isbn }}</p>
+          <p class="card-text"><span class="fw-bold">Nb pages :</span> {{ currentBook.nbPages }}</p>
+          <p class="card-text"><span class="fw-bold">Weight :</span> {{ currentBook.weight }} grammes </p>
+        </div>
+
+        <div class="card-footer">
+          <small class="text-muted">Publishing Date : {{currentBook.publishingDate | date: 'longDate'}}</small>
+        </div>
+        <!---->
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--   Form submitted msg -->
+  <div *ngIf="!currentBook.id">
+    <div class="card bg-dark text-white p-3 d-flex flex-column align-items-center">
+      <h4 class="mb-5"> Cannot access this Book...</h4>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" class="bi bi-bookmark-x mb-5"
+           viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M6.146 5.146a.5.5 0 0 1 .708 0L8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 0 1 0-.708z"/>
+        <path
+          d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+      </svg>
+
+      <a class="btn btn-light align-self-end" routerLink="/">
+        Back home
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </a>
+
+    </div>
+  </div>
+
+</div>
