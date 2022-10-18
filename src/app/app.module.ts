@@ -11,6 +11,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {DatePipe, registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import {FormsModule} from "@angular/forms";
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 registerLocaleData(localeEn, 'en');
 
@@ -19,7 +22,10 @@ registerLocaleData(localeEn, 'en');
     AppComponent,
     AddBookComponent,
     BookDetailsComponent,
-    BookListComponent
+    BookListComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
